@@ -24,9 +24,9 @@ const App = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  /*useEffect(() => {
     dispatch(fetchIngredients());
-  }, [dispatch]);
+  }, [dispatch]);*/
   return (
     <Routes>
       <Route

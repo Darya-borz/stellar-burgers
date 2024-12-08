@@ -30,6 +30,7 @@ export const orderBurger = createAsyncThunk(
   'newOrder/orderBurger',
   async (data: string[]) => await orderBurgerApi(data)
 );
+
 export const newOrderSlice = createSlice({
   name: 'newOrder',
   initialState,
@@ -43,17 +44,21 @@ export const newOrderSlice = createSlice({
           ]
         : []
   },
+
   reducers: {
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      action.payload.type !== 'bun'
-        ? (state.constructorItems.ingredients = [
-            ...state.constructorItems.ingredients,
-            { ...action.payload, id: action.payload._id }
-          ])
-        : (state.constructorItems.bun = {
-            ...action.payload,
-            id: nanoid()
-          });
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        if (action.payload.type !== 'bun') {
+          const newIngredients = [...state.constructorItems.ingredients];
+          newIngredients.push(action.payload);
+          state.constructorItems.ingredients = newIngredients;
+        } else {
+          state.constructorItems.bun = action.payload;
+        }
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: { ...ingredient, id: nanoid() }
+      })
     },
     moveIngredient: (
       state,
