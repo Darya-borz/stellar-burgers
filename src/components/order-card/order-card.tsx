@@ -1,7 +1,10 @@
 import { FC, memo, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/store';
-import { fetchIngredients } from '../../services/reducers/ingredientsSlice';
+import {
+  fetchIngredients,
+  getIngredientsState
+} from '../../services/reducers/ingredientsSlice';
 import { OrderCardProps } from './type';
 import { TIngredient } from '@utils-types';
 import { OrderCardUI } from '../ui/order-card';
@@ -14,7 +17,7 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   /** TODO: взять переменную из стора */
   //const ingredients: TIngredient[] = [];
   const dispatch = useDispatch();
-  const { ingredients } = useSelector((state) => state.ingredientsReducer);
+  const { ingredients } = useSelector(getIngredientsState);
 
   useEffect(() => {
     if (!ingredients.length) {

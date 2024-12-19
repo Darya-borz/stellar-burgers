@@ -3,14 +3,15 @@ import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
 import { Navigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/store';
-import { fetchIngredients } from '../../services/reducers/ingredientsSlice';
+import {
+  fetchIngredients,
+  getIngredientsState
+} from '../../services/reducers/ingredientsSlice';
 
 export const IngredientDetails: FC = () => {
   /** TODO: взять переменную из стора */
   const dispatch = useDispatch();
-  const { ingredients, isLoading } = useSelector(
-    (state) => state.ingredientsReducer
-  );
+  const { ingredients, isLoading } = useSelector(getIngredientsState);
   const { id } = useParams();
 
   useEffect(() => {

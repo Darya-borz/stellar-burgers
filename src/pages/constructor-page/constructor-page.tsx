@@ -4,13 +4,16 @@ import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
 import { FC, useEffect } from 'react';
-import { fetchIngredients } from '../../services/reducers/ingredientsSlice';
+import {
+  fetchIngredients,
+  getIngredientsState
+} from '../../services/reducers/ingredientsSlice';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
   //const isIngredientsLoading = false;
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.ingredientsReducer);
+  const { isLoading } = useSelector(getIngredientsState);
   useEffect(() => {
     dispatch(fetchIngredients());
   }, []);

@@ -5,20 +5,19 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   clearOrderConstructor,
   getNewOrderData,
+  getNewOrderState,
   orderBurger
 } from '../../services/reducers/newOrderSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getUserState } from '../../services/reducers/userSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
   const dispatch = useDispatch();
-  const { constructorItems, orderRequest, orderModalData } = useSelector(
-    (state) => state.newOrderReducer
-  );
-  const newOrderData = useSelector((state) =>
-    getNewOrderData({ newOrder: state.newOrderReducer })
-  );
-  const { user, isLoading } = useSelector((state) => state.userReducer);
+  const { constructorItems, orderRequest, orderModalData } =
+    useSelector(getNewOrderState);
+  const newOrderData = useSelector(getNewOrderData);
+  const { user, isLoading } = useSelector(getUserState);
   const navigate = useNavigate();
   const location = useLocation();
 

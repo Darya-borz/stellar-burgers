@@ -18,6 +18,7 @@ import InfoAboutIngredient from '../info-about-ingredient/info-about-ingredient'
 import InfoAboutFeed from '../info-about-order/info-about-order';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
+import { checkUserAuth } from '../../services/reducers/userSlice';
 import { fetchIngredients } from '../../services/reducers/ingredientsSlice';
 
 const App = () => {
@@ -27,6 +28,10 @@ const App = () => {
   /*useEffect(() => {
     dispatch(fetchIngredients());
   }, [dispatch]);*/
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, [dispatch]);
+
   return (
     <Routes>
       <Route

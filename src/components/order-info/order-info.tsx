@@ -5,15 +5,18 @@ import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
 import { fetchFeed } from '../../services/reducers/feedSlice';
-import { fetchIngredients } from '../../services/reducers/ingredientsSlice';
+import {
+  fetchIngredients,
+  getIngredientsState
+} from '../../services/reducers/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const { number } = useParams();
   const dispatch = useDispatch();
-  const { ingredients } = useSelector((state) => state.ingredientsReducer);
+  const { ingredients } = useSelector(getIngredientsState);
   const orderData = useSelector((state) =>
-    state.feedReducer.orders.find((item) => item.number === Number(number))
+    state.feed.orders.find((item) => item.number === Number(number))
   );
 
   //const ingredients: TIngredient[] = [];

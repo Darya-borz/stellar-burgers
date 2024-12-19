@@ -2,12 +2,12 @@ import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
-import { fetchFeed } from '../../services/reducers/feedSlice';
+import { fetchFeed, getFeedState } from '../../services/reducers/feedSlice';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const Feed: FC = () => {
   /** TODO: взять переменную из стора */
-  const { isLoading, orders } = useSelector((state) => state.feedReducer);
+  const { isLoading, orders } = useSelector(getFeedState);
   const dispatch = useDispatch();
 
   useEffect(() => {

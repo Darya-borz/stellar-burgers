@@ -2,6 +2,7 @@ import { orderBurgerApi } from '@api';
 import {
   PayloadAction,
   createAsyncThunk,
+  createSelector,
   createSlice,
   nanoid
 } from '@reduxjs/toolkit';
@@ -35,16 +36,16 @@ export const newOrderSlice = createSlice({
   name: 'newOrder',
   initialState,
   selectors: {
-    getNewOrderData: (state) =>
-      state.constructorItems.bun?._id
-        ? [
-            state.constructorItems.bun?._id,
-            ...state.constructorItems.ingredients.map((item) => item._id),
-            state.constructorItems.bun?._id
-          ]
-        : []
-  },
+    getNewOrderData: createSelector(
+      (state: TNewOrderState) => state.constructorItems,
+      ({ bun, ingredients }) =>
+        bun?._id
+          ? [bun._id, ...ingredients.map((item) => item._id), bun._id]
+          : []
+    ),
 
+    getNewOrderState: (state) => state
+  },
   reducers: {
     addIngredient: {
       reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
@@ -98,7 +99,7 @@ export const newOrderSlice = createSlice({
       });
   }
 });
-export const { getNewOrderData } = newOrderSlice.selectors;
+export const { getNewOrderData, getNewOrderState } = newOrderSlice.selectors;
 export const {
   addIngredient,
   moveIngredient,

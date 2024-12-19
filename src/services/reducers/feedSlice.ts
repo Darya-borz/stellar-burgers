@@ -23,10 +23,13 @@ export const fetchFeed = createAsyncThunk(
   'feed/fetchFeed',
   async () => await getFeedsApi()
 );
-export const FeedSlice = createSlice({
+export const feedSlice = createSlice({
   name: 'feed',
   initialState,
   reducers: {},
+  selectors: {
+    getFeedState: (state) => state
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFeed.pending, (state) => {
@@ -45,4 +48,5 @@ export const FeedSlice = createSlice({
       });
   }
 });
-export default FeedSlice.reducer;
+
+export const { getFeedState } = feedSlice.selectors;
