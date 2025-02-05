@@ -50,3 +50,4 @@ export const feedSlice = createSlice({
 });
 
 export const { getFeedState } = feedSlice.selectors;
+export default feedSlice.reducer;
