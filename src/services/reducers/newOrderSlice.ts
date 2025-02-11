@@ -91,6 +91,8 @@ export const newOrderSlice = createSlice({
       .addCase(orderBurger.fulfilled, (state, action) => {
         state.orderRequest = state.isLoading = false;
         state.orderModalData = action.payload.order;
+        // Очистка конструктора после получения подтверждения от сервера
+        newOrderSlice.caseReducers.clearOrderConstructor(state);
       })
       .addCase(orderBurger.rejected, (state) => {
         state.orderRequest = state.isLoading = false;

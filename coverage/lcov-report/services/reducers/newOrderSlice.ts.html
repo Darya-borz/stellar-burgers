@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.16% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>107/109</span>
+                <span class='fraction'>111/111</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.73% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>18/19</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/8</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.16% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>107/109</span>
+                <span class='fraction'>111/111</span>
             </div>
         
             
@@ -172,7 +172,9 @@
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
 <a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -242,16 +244,16 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -263,6 +265,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -350,9 +354,9 @@ export const newOrderSlice = createSlice({
     ) =&gt; {
       const { index, offset } = action.payload;
       const arr = state.constructorItems.ingredients.slice();
-      if (index + offset &gt;= arr.length || index + offset &lt; 0) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >        return state;</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
+      if (index + offset &gt;= arr.length || index + offset &lt; 0) {
+        return state;
+      }
       arr.splice(index + offset, 0, arr.splice(index, 1)[0]);
       state.constructorItems.ingredients = arr;
     },
@@ -362,7 +366,7 @@ export const newOrderSlice = createSlice({
           (_, idx) =&gt; idx !== action.payload
         );
     },
-    clearOrderConstructor: <span class="fstat-no" title="function not covered" >(state) =&gt; (s</span>tate = initialState)
+    clearOrderConstructor: (state) =&gt; (state = initialState)
   },
   extraReducers: (builder) =&gt; {
     builder
@@ -374,6 +378,8 @@ export const newOrderSlice = createSlice({
       .addCase(orderBurger.fulfilled, (state, action) =&gt; {
         state.orderRequest = state.isLoading = false;
         state.orderModalData = action.payload.order;
+        // Очистка конструктора после получения подтверждения от сервера
+        newOrderSlice.caseReducers.clearOrderConstructor(state);
       })
       .addCase(orderBurger.rejected, (state) =&gt; {
         state.orderRequest = state.isLoading = false;
@@ -397,7 +403,7 @@ export default newOrderSlice.reducer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-02-04T20:40:32.493Z
+                at 2025-02-11T08:46:24.504Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

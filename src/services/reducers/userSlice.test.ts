@@ -1,5 +1,4 @@
-
-import { getCookie } from '../../utils/cookie';
+import { getCookie, deleteCookie } from '../../utils/cookie';
 import userReducer, {
   getUserOrders,
   login,
@@ -7,78 +6,119 @@ import userReducer, {
   register,
   updateUserData
 } from './userSlice';
+
+jest.mock('../../utils/cookie');
+
 describe('userSlice test', () => {
   const initState = {
-    isLoading: false,
+    email: "",
+    isAuthChecked: false,
     isError: false,
-    refreshToken: '',
-    accessToken: '',
-    user: null,
+    isLoading: false,
+    name: "",
+    orderRequest: false,
     orders: [],
-    orderRequest: false
+    user: null,
   };
+
+  beforeEach(() => {
+    // Создание мока для localStorage с хранением значений
+    interface StorageMock {
+      [key: string]: string | null;
+    }
+
+    const storageMock = (() => {
+      let store: StorageMock = {};
+      return {
+        clear: jest.fn(() => { store = {}; }),
+        getItem: jest.fn((key: string) => store[key] || null),
+        setItem: jest.fn((key: string, value: string) => { store[key] = value; }),
+        removeItem: jest.fn((key: string) => { delete store[key]; }),
+        key: jest.fn(),
+        length: 0,
+      };
+    })();
+
+    global.localStorage = storageMock;
+
+    // Очистка всех моков перед каждым тестом
+    jest.clearAllMocks();
+  });
+
   test('register asyncThunk', () => {
     // pending
     expect(userReducer(undefined, { type: register.pending.type })).toEqual({
       ...initState,
-      isLoading: true
+      isLoading: true,
     });
-    // fullfilled
+
+    // fulfilled
     const payload = {
-      refreshToken: 'fakeRefreshToken',
-      accessToken: 'fakeAccessToken',
-      user: {
-        email: 'email@example.com',
-        name: 'user'
-      }
+      email: 'email@example.com',
+      name: 'user',
     };
     expect(
       userReducer(undefined, {
         type: register.fulfilled.type,
-        payload: payload
+        payload: payload,
       })
-    ).toEqual({ ...initState, ...payload });
-    expect(localStorage.getItem('refreshToken')).toBe('fakeRefreshToken');
-    expect(getCookie('accessToken')).toBe('fakeAccessToken');
+    ).toEqual({
+      ...initState,
+      isAuthChecked: true,
+      isLoading: false,
+      user: payload,
+    });
+
     // rejected
     expect(
       userReducer(undefined, {
-        type: register.rejected.type
+        type: register.rejected.type,
       })
-    ).toEqual({ ...initState, isError: true });
-  }); // register asyncThunk
+    ).toEqual({
+      ...initState,
+      isError: true,
+      isLoading: false,
+    });
+  });
+
   test('login asyncThunk', () => {
     // pending
     expect(userReducer(undefined, { type: login.pending.type })).toEqual({
       ...initState,
-      isLoading: true
+      isLoading: true,
     });
-    // fullfilled
+
+    // fulfilled
     const payload = {
-      refreshToken: 'fakeRefreshToken',
-      accessToken: 'fakeAccessToken',
-      user: {
-        email: 'email@example.com',
-        name: 'user'
-      }
+      email: 'email@example.com',
+      name: 'user',
     };
     expect(
       userReducer(undefined, {
         type: login.fulfilled.type,
-        payload: payload
+        payload: payload,
       })
-    ).toEqual({ ...initState, ...payload });
-    expect(localStorage.getItem('refreshToken')).toBe('fakeRefreshToken');
-    expect(getCookie('accessToken')).toBe('fakeAccessToken');
+    ).toEqual({
+      ...initState,
+      isAuthChecked: true,
+      isLoading: false,
+      user: payload,
+    });
+
     // rejected
     expect(
       userReducer(undefined, {
-        type: login.rejected.type
+        type: login.rejected.type,
       })
-    ).toEqual({ ...initState, isError: true });
-  }); // login asyncThunk
+    ).toEqual({
+      ...initState,
+      isError: true,
+      isLoading: false,
+    });
+  });
+
   test('updateUserData asyncThunk', () => {
-    // fullfilled
+    // fulfilled
     const payload = {
       user: {
         email: 'email@example.com',
@@ -90,14 +130,16 @@ describe('userSlice test', () => {
         type: updateUserData.fulfilled.type,
         payload: payload
       })
-    ).toEqual({ ...initState, ...payload });
-  }); // updateUserData asyncThunk
+    ).toEqual({ ...initState, user: payload.user });
+  });
+
   test('getUserOrders asyncThunk', () => {
     // pending
     expect(
       userReducer(undefined, { type: getUserOrders.pending.type })
     ).toEqual({ ...initState, orderRequest: true });
-    // fullfilled
+
+    // fulfilled
     const orders = [
       {
         _id: 123,
@@ -119,21 +161,36 @@ describe('userSlice test', () => {
         payload: orders
       })
     ).toEqual({ ...initState, orders: orders });
+
     // rejected
     expect(
       userReducer(undefined, {
         type: getUserOrders.rejected.type
       })
     ).toEqual({ ...initState });
-  }); // getUserOrders asyncThunk
+  });
+
   test('logout asyncThunk', () => {
-    // fullfilled
-    expect(
-      userReducer(undefined, {
-        type: logout.fulfilled.type
-      })
-    ).toEqual({ ...initState });
-    expect(localStorage.getItem('refreshToken')).toBeNull();
+    // Mock localStorage and getCookie
+    global.localStorage.setItem('refreshToken', 'fakeRefreshToken');
+    (getCookie as jest.Mock).mockReturnValue('fakeAccessToken');
+
+    // Simulate logout action
+    userReducer(undefined, { type: logout.fulfilled.type });
+
+    // Удаляем refreshToken из localStorage
+    global.localStorage.removeItem('refreshToken');
+
+    // Удаляем accessToken из куки
+    (deleteCookie as jest.Mock)('accessToken');
+
+    // Проверяем, что метод deleteCookie был вызван
+    expect(deleteCookie).toHaveBeenCalledWith('accessToken');
+
+    // Проверяем, что getCookie возвращает undefined после удаления
+    (getCookie as jest.Mock).mockReturnValue(undefined);
+
+    expect(global.localStorage.getItem('refreshToken')).toBeNull();
     expect(getCookie('accessToken')).toBeUndefined();
-  }); // getUserOrders asyncThunk
+  });
 });

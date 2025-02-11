@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75.15% </span>
+                <span class="strong">83.63% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>124/165</span>
+                <span class='fraction'>138/165</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75.15% </span>
+                <span class="strong">83.63% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>124/165</span>
+                <span class='fraction'>138/165</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -349,40 +349,40 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -514,26 +514,26 @@ export const userSlice = createSlice({
         state.isError = false;
       })
       .addCase(login.fulfilled, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.isLoading = false;</span>
-<span class="cstat-no" title="statement not covered" >        state.user = action.payload;</span>
-<span class="cstat-no" title="statement not covered" >        state.isAuthChecked = true;</span>
+        state.isLoading = false;
+        state.user = action.payload;
+        state.isAuthChecked = true;
       })
       .addCase(login.rejected, (state) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.isLoading = false;</span>
-<span class="cstat-no" title="statement not covered" >        state.isError = true;</span>
+        state.isLoading = false;
+        state.isError = true;
       })
       .addCase(register.pending, (state) =&gt; {
         state.isLoading = true;
         state.isError = false;
       })
       .addCase(register.fulfilled, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.isLoading = false;</span>
-<span class="cstat-no" title="statement not covered" >        state.user = action.payload;</span>
-<span class="cstat-no" title="statement not covered" >        state.isAuthChecked = true;</span>
+        state.isLoading = false;
+        state.user = action.payload;
+        state.isAuthChecked = true;
       })
       .addCase(register.rejected, (state) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.isLoading = false;</span>
-<span class="cstat-no" title="statement not covered" >        state.isError = true;</span>
+        state.isLoading = false;
+        state.isError = true;
       })
       .addCase(updateUserData.fulfilled, (state, action) =&gt; {
         state.user = action.payload.user;
@@ -542,12 +542,12 @@ export const userSlice = createSlice({
         state.orderRequest = true;
       })
       .addCase(getUserOrders.fulfilled, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.orderRequest = false;</span>
-<span class="cstat-no" title="statement not covered" >        state.orders = action.payload;</span>
+        state.orderRequest = false;
+        state.orders = action.payload;
       })
       .addCase(getUserOrders.rejected, (state) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.orderRequest = false;</span>
-<span class="cstat-no" title="statement not covered" >        state.orders = [];</span>
+        state.orderRequest = false;
+        state.orders = [];
       })
       .addCase(logout.fulfilled, (state) =&gt; {
         state.user = null;
@@ -565,7 +565,7 @@ export const { authChecked, setUser } = userSlice.actions;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-02-04T20:40:32.493Z
+                at 2025-02-11T08:46:24.504Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
