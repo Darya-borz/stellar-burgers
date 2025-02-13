@@ -26,7 +26,7 @@ type TUserState = {
   email: string;
   isAuthChecked: boolean;
 };
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isLoading: false,
   isError: false,
   name: '',

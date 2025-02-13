@@ -1,8 +1,7 @@
-
 describe('Конструктор бургеров', () => {
     beforeEach(() => {
       cy.intercept('api/ingredients', { fixture: 'ingredients.json' });
-      cy.visit('http://localhost:4000');
+      cy.visit('http://localhost:4000/');
     });
     it('Добавление ингредиентов', () => {
       // проверка на отсутствие ингредиентов в конструкторе изначально

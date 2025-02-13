@@ -1,16 +1,18 @@
 import { rootReducer } from './store';
-import ingredientsReducer from './reducers/ingredientsSlice';
-import newOrderReducer from './reducers/newOrderSlice';
-import feedReducer from './reducers/feedSlice';
-import userReducer from './reducers/userSlice';
+import ingredientsReducer, { initialState as ingredientsInitialState } from './reducers/ingredientsSlice';
+import newOrderReducer, { initialState as newOrderInitialState } from './reducers/newOrderSlice';
+import feedReducer, { initialState as feedInitialState } from './reducers/feedSlice';
+import userReducer, { initialState as userInitialState } from './reducers/userSlice';
 
 describe('store test', () => {
   test('rootReducer initialValue', () => {
-    expect(rootReducer(undefined, { type: 'unknown' })).toEqual({
-      ingredients: ingredientsReducer(undefined, { type: 'unknown' }),
-      newOrder: newOrderReducer(undefined, { type: 'unknown' }),
-      feed: feedReducer(undefined, { type: 'unknown' }),
-      user: userReducer(undefined, { type: 'unknown' })
-    });
+    const initialState = {
+      ingredients: ingredientsInitialState,
+      newOrder: newOrderInitialState,
+      feed: feedInitialState,
+      user: userInitialState
+    };
+
+    expect(rootReducer(undefined, { type: 'unknown' })).toEqual(initialState);
   });
 });
