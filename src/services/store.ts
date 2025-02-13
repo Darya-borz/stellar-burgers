@@ -13,7 +13,7 @@ export const useAppDispatch: () => AppDispatch = () => dispatchHook();
 export const useAppSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 //const rootReducer = () => {}; // Заменить на импорт настоящего редьюсера
-const rootReducer = combineSlices(
+export const rootReducer = combineSlices(
   ingredientsSlice,
   newOrderSlice,
   feedSlice,

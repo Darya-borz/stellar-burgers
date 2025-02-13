@@ -7,7 +7,7 @@ type TIngredientsState = {
   isError: boolean;
   ingredients: TIngredient[];
 };
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   isLoading: false,
   isError: false,
   ingredients: []
@@ -44,3 +44,4 @@ export const ingredientsSlice = createSlice({
 });
 
 export const { getIngredientsState } = ingredientsSlice.selectors;
+export default ingredientsSlice.reducer;
